@@ -89,7 +89,7 @@ if (isset($userName)) {
       </div>
 
 
-      <p class="text-center top_spac"> Developed by <a target="_blank" href="http://smridha.com/">Salihan Mridha</a>  -  <a href="?action=logout">Logout</a> </p>
+      <p class="text-center top_spac"> Developed by <a target="_blank" href="">URVISH</a>  -  <a href="logout.php">Logout</a> </p>
 
     </div></div>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
