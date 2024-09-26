@@ -243,7 +243,6 @@ overflow-y: auto;
 
 .incoming_msg{
 margin: 26px 0 26px;
-background-color: #1CB94A;
 
 }
 
@@ -251,5 +250,5 @@ background-color: #1CB94A;
 .username {
 font-weight: bold;
 margin-bottom: 5px;
-color: #ff5100; /* Optional: Change color to differentiate usernames */
+color: #007bff; /* Optional: Change color to differentiate usernames */
 }
