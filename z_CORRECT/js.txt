@@ -23,70 +23,67 @@ document.addEventListener('DOMContentLoaded', function () {
     function sendMessage() {
         const message = messageInput.value.trim();
         if (message) {
-            // Append the new message to the chat history
-            appendMessage({
-                message: message,
-                formatted_date: new Date().toLocaleDateString(),
-                formatted_time: new Date().toLocaleTimeString(),
-                self: true,
-                user_name: 'Urvish'
-            });
-
-            // Clear the input field and scroll to the latest message
-            messageInput.value = '';
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-
-            // Send the message to the server
-            fetch('fetchmessages.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+            $.ajax({
+                url: 'chat_with_person.php',
+                type: 'POST',
+                data: {
+                    action: 'sendMessage',
+                    message: message
                 },
-                body: `message=${encodeURIComponent(message)}&username=Urvish`,
-            })
-            .then((response) => response.text())
-            .then((data) => {
-                console.log(data);
-                // Fetch new messages after sending
-                fetchMessages();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                success: function(response) {
+                    if (JSON.parse(response).success) { // Check if message sent successfully
+                        appendMessage({
+                            message: message,
+                            formatted_date: new Date().toLocaleDateString(),
+                            formatted_time: new Date().toLocaleTimeString(),
+                            self: true,
+                            user_name: 'Urvish' // Assuming the user's name is 'Urvish'
+                        });
+                        messageInput.value = '';
+                        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+                    } else {
+                        alert('Error sending message.');
+                    }
+                }
             });
         }
     }
 
-    function appendMessage(msg) {
-        const userName = msg.self ? '' : `<span class="username-display">${msg.user_name}</span>`;
-        const msgClass = msg.self ? 'outgoing_msg' : 'incoming_msg';
-        const innerMsgClass = msg.self ? 'sent_msg' : 'received_msg';
-        const newMessage = document.createElement('div');
-        newMessage.classList.add(msgClass);
-        newMessage.innerHTML = `
-            <div class="${innerMsgClass}">
-                ${userName}
-                <p>${msg.message}</p>
-                <span class="time_date">${msg.formatted_time} | ${msg.formatted_date}</span>
+    function appendMessage(messageData) {
+        const userName = messageData.self ? '' : `<span class="user_name">${messageData.user_name}</span>`;
+        const msgClass = messageData.self ? 'outgoing_msg' : 'incoming_msg';
+        const html = `
+            <div class="${msgClass}">
+                <div class="${messageData.self ? 'sent_msg' : 'received_msg'}">
+                    ${userName}
+                    <p>${messageData.message}</p>
+                    <span class="time_date"> ${messageData.formatted_date} | ${messageData.formatted_time} </span>
+                </div>
             </div>
         `;
-        chatHistory.appendChild(newMessage);
+        chatHistory.insertAdjacentHTML('beforeend', html);
+        chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
     }
 
-    function fetchMessages() {
-        fetch('fetchmessages.php')
-            .then((response) => response.json())
-            .then((data) => {
-                chatHistory.innerHTML = ''; // Clear current messages
-                data.messages.forEach(msg => {
+    function loadMessages() {
+        $.ajax({
+            url: 'chat_with_person.php',
+            type: 'POST',
+            data: { action: 'getMessages' },
+            success: function(data) {
+                const messages = JSON.parse(data);
+                chatHistory.innerHTML = ''; // Clear the message box
+                messages.forEach(msg => {
                     appendMessage(msg);
                 });
-                chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the latest message
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to the bottom
+            }
+        });
     }
 
-    // Initial fetch of old messages
-    fetchMessages();
+    // Load messages on page load
+    loadMessages();
+
+    // Call loadMessages at regular intervals
+    setInterval(loadMessages, 3000); // Load messages every 3 seconds
 });

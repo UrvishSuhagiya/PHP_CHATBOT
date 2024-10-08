@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post" action="">
             <div class="form-group text-center">
                 <button type="submit" name="chat_option" value="bot" class="btn btn-primary">Chat with Bot</button>
-                <button type="submit" name="chat_option" value="person" class="btn btn-secondary">Chat with Person</button>
+                <button type="submit" name="chat_option" value="person" class="btn btn-secondary">Chat with Group</button>
             </div>
         </form>
     </div>

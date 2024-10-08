@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php"); // Redirect to login if not logged in
+    header("Location: login.php");
     exit();
 }
 
@@ -15,7 +15,7 @@ class PersonChat {
     function __construct() {
         $this->db = new DB();
         $this->msgSession = new Session();
-        date_default_timezone_set('Asia/Kolkata'); // Set timezone
+        date_default_timezone_set('Asia/Kolkata');
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->handleChat();
@@ -37,7 +37,7 @@ class PersonChat {
         $dateTime = date("Y-m-d H:i:s");
 
         if (isset($userId) && !empty($message)) {
-            $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); // Sanitize message
+            $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
             $sql = "INSERT INTO message(user_id, message, created_at) VALUES(?, ?, ?)";
             $arr = array($userId, $message, $dateTime);
             $this->db->simplequery($sql, $arr);
@@ -50,8 +50,6 @@ class PersonChat {
 
     private function getMessages() {
         $userId = $this->msgSession->getSession('user_id');
-
-        // Fetch messages along with user names
         $sql = "SELECT message.*, user.user_name FROM message JOIN user ON message.user_id = user.user_id ORDER BY message.created_at ASC";
         $query = $this->db->simplequerywithoutcondition($sql);
         $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -91,7 +89,7 @@ new PersonChat();
 </head>
 <body>
     <div class="container">
-        <h3 class="text-center">Chat with Person</h3>
+        <h3 class="text-center">Group Chat</h3>
         <div class="messaging">
             <div class="inbox_msg">
                 <div class="mesgs">
@@ -120,7 +118,6 @@ new PersonChat();
         return confirm("Are you sure you want to logout?");
     }
 
-    // Handle message sending
     $(document).ready(function() {
         $('#sendmsgbutton').click(function() {
             var message = $('#write_msg').val();
@@ -133,9 +130,9 @@ new PersonChat();
                         message: message
                     },
                     success: function(response) {
-                        if (JSON.parse(response).success) { // Check if message sent successfully
-                            $('#write_msg').val(''); // Clear input
-                            loadMessages(); // Load messages
+                        if (JSON.parse(response).success) {
+                            $('#write_msg').val('');
+                            loadMessages();
                         } else {
                             alert('Error sending message.');
                         }
@@ -144,13 +141,9 @@ new PersonChat();
             }
         });
 
-        // Load messages on page load
         loadMessages();
+        setInterval(loadMessages, 3000);
 
-        // Call loadMessages at regular intervals
-        setInterval(loadMessages, 3000); // Load messages every 3 seconds
-
-        // Prevent form submission on Enter key press
         $('#msgFrm').submit(function(event) {
             event.preventDefault();
             $('#sendmsgbutton').click();
@@ -164,22 +157,23 @@ new PersonChat();
             data: { action: 'getMessages' },
             success: function(data) {
                 const messages = JSON.parse(data);
-                $('#msgBox').empty(); // Clear the message box
+                $('#msgBox').empty();
                 messages.forEach(msg => {
                     const userName = msg.self ? '' : `<span class="user_name">${msg.user_name}</span>`;
                     const msgClass = msg.self ? 'outgoing_msg' : 'incoming_msg';
+                    const msgContentClass = msg.self ? 'sent_msg' : 'received_msg';
                     const html = `
                         <div class="${msgClass}">
-                            <div class="${msg.self ? 'sent_msg' : 'received_msg'}">
+                            <div class="${msgContentClass}">
                                 ${userName}
-                                <p>${msg.message}</p>
+                                <p class="msg_text">${msg.message}</p>
                                 <span class="time_date"> ${msg.formatted_date} | ${msg.formatted_time} </span>
                             </div>
                         </div>
-                    `;
+                        `;
                     $('#msgBox').append(html);
                 });
-                scrollToBottom(); // Scroll to the bottom
+                scrollToBottom();
             }
         });
     }
