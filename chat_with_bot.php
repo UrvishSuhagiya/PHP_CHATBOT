@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
     <meta charset="UTF-8">
     <title>Chat with Bot</title>
     <link href="assets/style.css" rel="stylesheet">
-    <link href="assets/bot_style.css" rel="stylesheet"> Include the new bot_style.css
+    <link href="assets/bot_style.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
 </head>
@@ -58,7 +58,7 @@ if (!isset($_SESSION['user_id'])) {
             align-items: center;
         }
         .msg_send_btn:hover {
-            background: #218838;
+            background: #C9E9D2;
         }
         .incoming_msg, .outgoing_msg {
             margin-bottom: 20px;
@@ -101,6 +101,25 @@ if (!isset($_SESSION['user_id'])) {
             outline: none;
             background: rgba(255, 255, 255, 0.7);
         }
+        #logoutLink{
+            background: #AB886D;
+            color: white; /* Color of the icon */
+            border: 4px;
+            width:20%;
+            border-radius: 5px;
+            padding: 10px 15px; /* Increased padding */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left:40%;
+            margin-top:2%;
+            margin-bottom:0%;
+        }
+        #logoutLink:hover {
+            background: #F95454;
+
+        }   
        
     </style>
 </style>
@@ -138,7 +157,6 @@ if (!isset($_SESSION['user_id'])) {
                         </div>
                     </div>
                 </div>
-                <p class="text-center top_spac"> Developed by <a target="_blank" href="">URVISH</a> - 
                     <a id="logoutLink" href="logout.php" onclick="return confirmLogout()">Logout</a>
                 </p>
             </div>

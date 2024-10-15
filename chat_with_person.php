@@ -128,7 +128,7 @@ new PersonChat();
             align-items: center;
         }
         .msg_send_btn:hover {
-            background: #218838;
+            background: #C9E9D2;
         }
         .incoming_msg, .outgoing_msg {
             margin-bottom: 20px;
@@ -171,6 +171,25 @@ new PersonChat();
             outline: none;
             background: rgba(255, 255, 255, 0.7);
         }
+        #logoutLink{
+            background: #AB886D;
+            color: white; /* Color of the icon */
+            border: 4px;
+            width:20%;
+            border-radius: 5px;
+            padding: 10px 15px; /* Increased padding */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left:40%;
+            margin-top:2%;
+            margin-bottom:0%;
+        }
+        #logoutLink:hover {
+            background: #F95454;
+
+        }   
     </style>
 </head>
 <body>
@@ -194,7 +213,6 @@ new PersonChat();
                     </div>
                 </div>
             </div>
-            <p class="text-center top_spac"> Developed by <a target="_blank" href="">URVISH</a> - 
                 <a id="logoutLink" href="logout.php" onclick="return confirmLogout()">Logout</a>
             </p>
         </div>
