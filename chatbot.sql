@@ -115,3 +115,19 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Add this to your existing chatbot.sql or execute it separately
+
+CREATE TABLE `bot_messages` (
+  `message_id` INT(10) NOT NULL AUTO_INCREMENT,
+  `user_id` INT(10) NOT NULL,
+  `message` TEXT NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  PRIMARY KEY (`message_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- Insert bot user
+INSERT INTO `user` (`user_id`, `user_name`, `email`, `password`) VALUES
+(0, 'Bot', 'bot@chatbot.com', '');
