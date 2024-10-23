@@ -1,9 +1,0 @@
-chat_with_person.php: If this file is used for rendering the chat interface, you should add the HTML code here. This is the most likely candidate.
-
-Messages.php: If this file handles the logic for displaying messages, it might also be appropriate to add the HTML here.
-
-User.php: This file probably handles user-related logic and is not the right place for displaying chat messages.
-
-fetchmessages.php: This file likely fetches messages from the database and sends them to the client-side but doesn’t render the HTML directly.
-
-sendmessages.php: This file likely handles sending messages to the server and is not the right place for rendering the chat interface.
