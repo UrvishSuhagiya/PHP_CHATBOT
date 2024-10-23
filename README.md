@@ -36,3 +36,23 @@ This chatbot is developed using PHP and MySQL, designed to interact with users a
    ```bash
    git clone https://github.com/yourusername/chatbot.git
    cd chatbot
+
+2. **Set Up XAMPP:**
+
+    Download and install XAMPP if you haven't already.
+    Start the Apache and MySQL modules from the XAMPP Control Panel.
+
+3. **Move the Project to XAMPP Directory:**
+  
+    Copy the cloned chatbot folder to the htdocs directory of your XAMPP installation. This is usually located at C:\xampp\htdocs\.
+
+4. **Create a Database:**
+
+    Open your web browser and go to http://localhost/phpmyadmin.
+    Click on "Databases" and create a new database (e.g., chatbot_db).
+    Import the SQL file (if provided) to set up the necessary tables. You can do this by selecting the database, clicking on the "Import" tab, and uploading the SQL file.
+
+5. **Run the Chatbot:**
+  
+    Open your web browser and navigate to http://localhost/chatbot (or the name of your project folder).
+    You should see the chatbot interface, and you can start interacting with it.
